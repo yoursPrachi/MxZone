@@ -9,6 +9,7 @@
 </head>
 <body>
   <header class="app-bar">
+    <a href="/" class="back">← Home</a>
     <h1>Admin Panel</h1>
   </header>
 
@@ -32,11 +33,58 @@
         <label>Terabox Link</label>
         <input type="url" name="teraboxLink" placeholder="https://..." required />
 
+        <label>Category</label>
+        <select name="category" required>
+          <option value="trending">Trending</option>
+          <option value="new">New Releases</option>
+          <option value="action">Action</option>
+          <option value="comedy">Comedy</option>
+        </select>
+
         <button type="submit" class="btn primary">Save Movie</button>
       </form>
     </div>
   </main>
 
-  <script type="module" src="/lib/admin.js"></script>
+  <script type="module">
+    import { addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    import { moviesCol } from "./lib/firebase.js";
+
+    const cloudName = "YOUR_CLOUD_NAME";
+    const uploadPreset = "YOUR_UNSIGNED_PRESET";
+
+    document.getElementById("uploadWidget").onclick = () => {
+      cloudinary.openUploadWidget({
+        cloudName,
+        uploadPreset,
+        sources: ["local", "url", "camera"],
+        cropping: true,
+        multiple: false,
+        folder: "movies"
+      }, (error, result) => {
+        if (!error && result && result.event === "success") {
+          document.getElementById("thumbUrl").value = result.info.secure_url;
+          alert("Poster uploaded! ✅");
+        }
+      });
+    };
+
+    document.getElementById("movieForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const movie = {
+        title: form.title.value,
+        description: form.description.value,
+        thumb: form.thumb.value,
+        adstraLink: form.adstraLink.value,
+        teraboxLink: form.teraboxLink.value,
+        category: form.category.value,
+        createdAt: Date.now()
+      };
+      await addDoc(moviesCol, movie);
+      alert("Movie saved to Firebase! 🎉");
+      form.reset();
+    });
+  </script>
 </body>
 </html>
