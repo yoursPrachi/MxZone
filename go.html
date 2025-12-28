@@ -3,25 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Continue...</title>
+  <title>Redirecting...</title>
   <link rel="stylesheet" href="/styles.css" />
-  <meta name="robots" content="noindex" />
 </head>
 <body>
   <main class="container center">
-    <div class="interstitial">
-      <h2>Please wait...</h2>
-      <p id="status">Opening the sponsor in a new tab, then continuing automatically.</p>
-      <div class="spinner" aria-hidden="true"></div>
-      <div class="actions">
-        <button id="manual" class="btn">Continue manually</button>
-      </div>
-    </div>
+    <h2>Opening sponsor...</h2>
+    <p id="status">Please wait...</p>
+    <button id="manual">Continue manually</button>
   </main>
-
-  <script type="module">
-    import { runRedirect } from './lib/redirect.js';
-    runRedirect();
-  </script>
+  <script type="module" src="/lib/redirect.js"></script>
 </body>
 </html>
