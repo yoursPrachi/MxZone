@@ -275,3 +275,53 @@ h2 {
   text-decoration: none;
 }
 .see-all:hover { text-decoration: underline; }
+
+
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  color: var(--primary);
+}
+.loader.hidden { display: none; }
+
+.progress-bar {
+  width: 80%;
+  max-width: 400px;
+  height: 16px;
+  background: #1f2833;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(102,252,241,0.4);
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  transition: width 0.2s ease;
+}
+
+.circle-timer { position: relative; width: 100px; height: 100px; margin-top: 15px; }
+.circle-timer svg { transform: rotate(-90deg); }
+
+#countdownText {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  color: var(--secondary);
+  text-shadow: 0 0 8px var(--secondary);
+}
+
+.reel-icon {
+  position: absolute; top: -10px; right: -10px;
+  font-size: 28px;
+  animation: spinReel 2s linear infinite, neonPulse 1.5s ease-in-out infinite;
+}
+@keyframes spinReel { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
+  50% { text-shadow: 0 0 15px var(--secondary), 0 0 30px var(--secondary); }
+  100% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
+}
