@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin Panel</title>
   <link rel="stylesheet" href="/styles.css" />
+  <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
 </head>
 <body>
   <main class="container">
@@ -12,12 +13,12 @@
     <form id="movieForm" class="form">
       <input type="text" name="title" placeholder="Movie Title" required />
       <textarea name="description" placeholder="Short Description" required></textarea>
-      <input type="url" name="thumb" placeholder="Thumbnail URL (Cloudinary)" required />
+      <input type="hidden" id="thumbUrl" name="thumb" />
+      <button type="button" id="uploadWidget" class="btn">Upload Poster</button>
       <input type="url" name="adstraLink" placeholder="Adstra Link" required />
       <input type="url" name="teraboxLink" placeholder="Terabox Link" required />
-      <button type="submit" class="btn primary">Add Movie</button>
+      <button type="submit" class="btn primary">Save Movie</button>
     </form>
-    <pre id="output" class="output"></pre>
   </main>
 
   <script type="module" src="/lib/admin.js"></script>
