@@ -286,3 +286,23 @@ h2 {
   color: #888;
   margin-top: 40px;
 }
+
+.banner {
+  position: relative;
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  box-shadow: 0 0 20px var(--secondary);
+}
+
+@media (max-width: 600px) {
+  .banner {
+    height: 40vh;
+  }
+}
+
+.banner img {
+  display: none;
+}
