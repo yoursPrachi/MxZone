@@ -24,7 +24,7 @@ body {
 }
 
 .app-bar h1 {
-  font-size: 20px;
+  font-size: 22px;
   margin: 0;
   color: var(--primary);
   text-shadow: 0 0 8px var(--primary);
@@ -38,7 +38,7 @@ body {
 
 /* Container */
 .container {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -49,68 +49,6 @@ h2 {
   color: var(--secondary);
   text-shadow: 0 0 6px var(--secondary);
 }
-
-/* Hero Banner (Front Page) */
-.hero {
-  position: relative;
-  height: 70vh;
-  background-size: cover;
-  background-position: center;
-  border-bottom: 2px solid #222;
-  transition: background-image 1s ease-in-out;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: #fff;
-}
-
-.hero-overlay h1 {
-  font-size: 36px;
-  margin-bottom: 12px;
-  color: var(--primary);
-  text-shadow: 0 0 12px var(--primary);
-}
-
-.hero-overlay p {
-  font-size: 18px;
-  margin-bottom: 20px;
-  color: #ddd;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 20px 0;
-}
-
-.tab {
-  background: #1f2833;
-  color: #c5c6c7;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.tab.active {
-  background: var(--primary);
-  color: #0b0c10;
-  box-shadow: 0 0 12px var(--primary);
-}
-
-.tab:hover { opacity: 0.9; }
 
 /* Search Bar */
 .search-bar {
@@ -133,7 +71,7 @@ h2 {
 
 .search-bar input::placeholder { color: #aaa; }
 
-/* Movie Grid */
+/* Movie Grid (used in admin or category pages) */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
@@ -174,7 +112,51 @@ h2 {
   color: var(--primary);
 }
 
-/* Detail Page Banner (Netflix-style) */
+/* Netflix-style Category Rows */
+.category-section {
+  margin-bottom: 40px;
+}
+
+.category-section h2 {
+  margin-bottom: 12px;
+  font-size: 22px;
+  color: var(--secondary);
+  text-shadow: 0 0 6px var(--secondary);
+}
+
+.row {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  scrollbar-width: none; /* Firefox */
+}
+
+.row::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.row .card {
+  flex: 0 0 auto;
+  width: 160px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.row .card img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+}
+
+.row .card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--primary);
+}
+
+/* Detail Page Banner */
 .banner {
   position: relative;
   height: 60vh;
