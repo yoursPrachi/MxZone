@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MX-style | Home</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <meta name="description" content="Stream and download curated movies and shows." />
+</head>
+<body>
+  <header class="app-bar">
+    <h1>MX-style</h1>
+    <nav class="tabs">
+      <a class="active">Home</a>
+      <a>Movies</a>
+      <a>Shows</a>
+      <a>Search</a>
+      <a>Reels</a>
+      <a>Local</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>A Year of Imports</h2>
+      <div id="grid" class="grid"></div>
+    </section>
+  </main>
+
+  <script type="module">
+    import { MOVIES } from './lib/data.js';
+    import { renderGrid } from './lib/ui.js';
+    renderGrid(document.getElementById('grid'), MOVIES);
+  </script>
+</body>
+</html>
