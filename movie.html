@@ -7,9 +7,15 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
+  <header class="app-bar">
+    <a href="/" class="back">← Home</a>
+    <h1>Details</h1>
+  </header>
+
   <main class="container">
-    <article id="card"></article>
+    <article id="card" class="detail-card"></article>
   </main>
+
   <script type="module">
     import { fetchMovies } from './lib/data.js';
     const params = new URLSearchParams(location.search);
@@ -19,10 +25,14 @@
       if (!movie) return;
       document.getElementById('card').innerHTML = `
         <img src="${movie.thumb}" alt="${movie.title}" />
-        <h2>${movie.title}</h2>
-        <p>${movie.description}</p>
-        <button onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">Watch Now</button>
-        <button onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">Download Now</button>
+        <div class="detail-body">
+          <h2>${movie.title}</h2>
+          <p>${movie.description}</p>
+          <div class="actions">
+            <button class="btn primary" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">Watch Now</button>
+            <button class="btn" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">Download Now</button>
+          </div>
+        </div>
       `;
     });
     window.go = (ad, to) => {
