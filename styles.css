@@ -483,3 +483,7 @@ body {
   background: var(--secondary);
   color: #fff;
 }
+
+.hidden {
+  display: none;
+}
