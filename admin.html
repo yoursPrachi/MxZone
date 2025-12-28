@@ -3,22 +3,38 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Admin Panel</title>
+  <title>Admin Panel | MXZone</title>
   <link rel="stylesheet" href="/styles.css" />
   <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
 </head>
 <body>
+  <header class="app-bar">
+    <h1>Admin Panel</h1>
+  </header>
+
   <main class="container">
-    <h2>Add New Movie</h2>
-    <form id="movieForm" class="form">
-      <input type="text" name="title" placeholder="Movie Title" required />
-      <textarea name="description" placeholder="Short Description" required></textarea>
-      <input type="hidden" id="thumbUrl" name="thumb" />
-      <button type="button" id="uploadWidget" class="btn">Upload Poster</button>
-      <input type="url" name="adstraLink" placeholder="Adstra Link" required />
-      <input type="url" name="teraboxLink" placeholder="Terabox Link" required />
-      <button type="submit" class="btn primary">Save Movie</button>
-    </form>
+    <div class="form-card">
+      <h2>Add New Movie</h2>
+      <form id="movieForm" class="form">
+        <label>Movie Title</label>
+        <input type="text" name="title" placeholder="Enter movie title" required />
+
+        <label>Description</label>
+        <textarea name="description" placeholder="Short description" required></textarea>
+
+        <label>Poster</label>
+        <button type="button" id="uploadWidget" class="btn">Upload Poster</button>
+        <input type="hidden" id="thumbUrl" name="thumb" />
+
+        <label>Adstra Link</label>
+        <input type="url" name="adstraLink" placeholder="https://..." required />
+
+        <label>Terabox Link</label>
+        <input type="url" name="teraboxLink" placeholder="https://..." required />
+
+        <button type="submit" class="btn primary">Save Movie</button>
+      </form>
+    </div>
   </main>
 
   <script type="module" src="/lib/admin.js"></script>
