@@ -325,3 +325,161 @@ h2 {
   50% { text-shadow: 0 0 15px var(--secondary), 0 0 30px var(--secondary); }
   100% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
 }
+
+
+/* General body styling */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  color: var(--primary, #66fcf1);
+  background: #0b0c10;
+  overflow: hidden;
+}
+
+/* Background carousel */
+.bg-carousel {
+  position: fixed;
+  top: 0; left: 0;
+  width: 200%; height: 100%;
+  display: flex;
+  animation: slide 25s linear infinite;
+  filter: blur(15px) brightness(0.4);
+  z-index: -3;
+}
+.bg-carousel img {
+  width: 50%;
+  object-fit: cover;
+}
+@keyframes slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Neon gradient overlay */
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg,
+    rgba(102,252,241,0.2),
+    rgba(255,0,150,0.2),
+    rgba(0,255,255,0.2));
+  mix-blend-mode: screen;
+  animation: pulseOverlay 6s ease-in-out infinite;
+  z-index: -2;
+}
+@keyframes pulseOverlay {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.4; }
+}
+
+/* Animated MXZone logo watermark */
+.watermark {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--secondary, #ff0096);
+  text-shadow: 0 0 10px var(--secondary), 0 0 20px var(--secondary);
+  animation: spinLogo 8s linear infinite, glowLogo 2s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0.7;
+}
+@keyframes spinLogo {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes glowLogo {
+  0% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
+  50% { text-shadow: 0 0 20px var(--secondary), 0 0 40px var(--secondary); }
+  100% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
+}
+
+/* Loader container */
+.container.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Loader styles */
+.loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  color: var(--primary);
+}
+.loader.hidden { display: none; }
+
+.progress-bar {
+  width: 80%;
+  max-width: 400px;
+  height: 16px;
+  background: #1f2833;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px rgba(102,252,241,0.4);
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  transition: width 0.2s ease;
+}
+
+.circle-timer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-top: 15px;
+}
+.circle-timer svg {
+  transform: rotate(-90deg);
+}
+#countdownText {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 22px;
+  color: var(--secondary);
+  text-shadow: 0 0 8px var(--secondary);
+}
+.reel-icon {
+  position: absolute;
+  top: -10px; right: -10px;
+  font-size: 28px;
+  animation: spinReel 2s linear infinite, neonPulse 1.5s ease-in-out infinite;
+}
+@keyframes spinReel {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
+  50% { text-shadow: 0 0 15px var(--secondary), 0 0 30px var(--secondary); }
+  100% { text-shadow: 0 0 5px var(--secondary), 0 0 10px var(--secondary); }
+}
+
+/* Back button */
+.back-home {
+  margin-top: 20px;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #1f2833;
+  color: var(--primary);
+  box-shadow: 0 0 10px rgba(102,252,241,0.6);
+  transition: background 0.3s ease;
+}
+.back-home:hover {
+  background: var(--secondary);
+  color: #fff;
+}
