@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MX-style | Details</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="app-bar">
+    <a href="/" class="back">← Home</a>
+    <h1 id="title">Details</h1>
+  </header>
+
+  <main class="container">
+    <article id="card" class="detail-card">
+      <img id="thumb" class="detail-thumb" alt="Poster" />
+      <div class="detail-body">
+        <p id="desc" class="desc"></p>
+        <div class="actions">
+          <button id="watchBtn" class="btn primary">Watch Now</button>
+          <button id="downloadBtn" class="btn">Download Now</button>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <script type="module">
+    import { MOVIES, byId } from './lib/data.js';
+    const params = new URLSearchParams(location.search);
+    const id = params.get('id');
+    const movie = byId(MOVIES, id);
+
+    if (!movie) {
+      document.getElementById('title').textContent = 'Not found';
+    } else {
+      document.getElementById('title').textContent = movie.title;
+      document.getElementById('thumb').src = movie.thumb;
+      document.getElementById('thumb').alt = movie.title;
+      document.getElementById('desc').textContent = movie.description;
+
+      const go = (type) => {
+        const ad = encodeURIComponent(movie.adstraLink);
+        const to = encodeURIComponent(movie.teraboxLink);
+        const label = encodeURIComponent(type);
+        // go.html handles opening Adstra, then redirecting here to Terabox.
+        location.href = `/go.html?ad=${ad}&to=${to}&label=${label}`;
+      };
+      document.getElementById('watchBtn').onclick = () => go('watch');
+      document.getElementById('downloadBtn').onclick = () => go('download');
+    }
+  </script>
+</body>
+</html>
