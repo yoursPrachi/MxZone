@@ -268,3 +268,10 @@ h2 {
   color: #888;
   margin-top: 40px;
 }
+.see-all {
+  font-size: 14px;
+  margin-left: 10px;
+  color: var(--primary);
+  text-decoration: none;
+}
+.see-all:hover { text-decoration: underline; }
