@@ -13,31 +13,46 @@
   </header>
 
   <main class="container">
+    <!-- ✅ Hero Banner -->
+    <div id="banner" class="banner"></div>
+
+    <!-- ✅ Movie Info Card -->
     <article id="card" class="detail-card"></article>
   </main>
 
   <script type="module">
     import { fetchMovies } from './lib/data.js';
+    import { transformUrl } from './lib/utils.js';
+
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
+
+    window.go = (ad, to) => {
+      if (!to) {
+        alert("Terabox link missing ❌");
+        return;
+      }
+      location.href = `/go.html?ad=${encodeURIComponent(ad)}&to=${encodeURIComponent(to)}`;
+    };
+
     fetchMovies().then(movies => {
       const movie = movies.find(m => m.id === id);
       if (!movie) return;
+
+      // ✅ Set background banner
+      document.getElementById('banner').style.backgroundImage =
+        `url('${transformUrl(movie.thumb, 'banner')}')`;
+
+      // ✅ Render movie info
       document.getElementById('card').innerHTML = `
-        <img src="${movie.thumb}" alt="${movie.title}" />
-        <div class="detail-body">
-          <h2>${movie.title}</h2>
-          <p>${movie.description}</p>
-          <div class="actions">
-            <button class="btn primary" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">Watch Now</button>
-            <button class="btn" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">Download Now</button>
-          </div>
+        <h2>${movie.title}</h2>
+        <p>${movie.description}</p>
+        <div class="actions">
+          <button class="btn primary" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">▶ Watch Now</button>
+          <button class="btn secondary" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">⬇ Download</button>
         </div>
       `;
     });
-    window.go = (ad, to) => {
-      location.href = `/go.html?ad=${encodeURIComponent(ad)}&to=${encodeURIComponent(to)}`;
-    };
   </script>
 </body>
 </html>
