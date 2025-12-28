@@ -7,11 +7,32 @@
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <main class="container center">
-    <h2>Opening sponsor...</h2>
-    <p id="status">Please wait...</p>
-    <button id="manual">Continue manually</button>
+  <main class="container">
+    <div class="detail-card">
+      <h2>Preparing your link…</h2>
+      <p>We’ll open the sponsor, then take you to the file.</p>
+      <div class="actions">
+        <a id="continue" class="btn primary" href="#">Continue</a>
+      </div>
+    </div>
   </main>
-  <script type="module" src="/lib/redirect.js"></script>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const ad = params.get('ad');
+    const to = params.get('to');
+
+    const openFlow = () => {
+      if (ad) window.open(ad, '_blank');
+      if (to) setTimeout(() => { location.href = to; }, 1500);
+    };
+
+    document.getElementById('continue').addEventListener('click', (e) => {
+      e.preventDefault();
+      openFlow();
+    });
+
+    setTimeout(openFlow, 4000);
+  </script>
 </body>
 </html>
