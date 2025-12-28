@@ -8,88 +8,77 @@
   <link rel="manifest" href="/manifest.json" />
 </head>
 <body>
-  <!-- Hero Section -->
-  <section class="hero" id="hero">
-    <div class="hero-overlay">
-      <h1>MXZone</h1>
-      <a href="#grid" class="btn primary">Explore Now</a>
-    </div>
-  </section>
-
-  <!-- Tabs -->
-  <nav class="tabs">
-    <button class="tab active" data-category="trending">🔥 Trending</button>
-    <button class="tab" data-category="new">🆕 New Releases</button>
-    <button class="tab" data-category="action">💥 Action</button>
-    <button class="tab" data-category="comedy">😂 Comedy</button>
-  </nav>
+  <!-- App Bar -->
+  <header class="app-bar">
+    <h1>MXZone</h1>
+  </header>
 
   <!-- Search Bar -->
   <div class="search-bar">
     <input type="text" id="searchInput" placeholder="🔍 Search movies..." />
   </div>
 
-  <!-- Movie Grid -->
+  <!-- Category Rows -->
   <main class="container">
-    <div id="grid" class="grid"></div>
+    <section class="category-section">
+      <h2>🔥 Trending</h2>
+      <div id="trendingRow" class="row"></div>
+    </section>
+
+    <section class="category-section">
+      <h2>🆕 New Releases</h2>
+      <div id="newRow" class="row"></div>
+    </section>
+
+    <section class="category-section">
+      <h2>💥 Action</h2>
+      <div id="actionRow" class="row"></div>
+    </section>
+
+    <section class="category-section">
+      <h2>😂 Comedy</h2>
+      <div id="comedyRow" class="row"></div>
+    </section>
   </main>
 
   <footer class="footer">
     <p>© 2025 MXZone | Powered by Firebase + Cloudinary</p>
   </footer>
 
-  <!-- Hero Banner Rotation -->
-  <script>
-    const banners = [
-      "https://copilot.microsoft.com/th/id/BCO.350aae78-d4c5-4d01-85f3-aa2af84c93e9.png",
-      "https://copilot.microsoft.com/th/id/BCO.efddd050-a07c-4a59-b35c-16e0750ed592.png",
-      "https://copilot.microsoft.com/th/id/BCO.5a79eb3f-ed5e-45bd-8d53-92f79e53c034.png"
-    ];
-    let current = 0;
-    const hero = document.getElementById("hero");
-    function changeBanner() {
-      hero.style.backgroundImage = `url('${banners[current]}')`;
-      current = (current + 1) % banners.length;
-    }
-    changeBanner();
-    setInterval(changeBanner, 5000);
-  </script>
-
   <!-- Firebase + UI -->
   <script type="module">
     import { fetchMovies } from './lib/data.js';
-    import { renderGrid } from './lib/ui.js';
+    import { renderRow } from './lib/ui.js';
 
     let allMovies = [];
-    const grid = document.getElementById('grid');
     const searchInput = document.getElementById('searchInput');
 
     fetchMovies().then(movies => {
       allMovies = movies;
-      renderGrid(grid, allMovies.filter(m => m.category === "trending"));
+      renderAllRows();
     });
 
-    document.querySelectorAll(".tab").forEach(tab => {
-      tab.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
-        const cat = tab.dataset.category;
-        const q = searchInput.value.toLowerCase();
-        const filtered = allMovies
-          .filter(m => m.category === cat)
-          .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q));
-        renderGrid(grid, filtered);
-      });
-    });
-
-    searchInput.addEventListener("input", () => {
-      const cat = document.querySelector(".tab.active")?.dataset.category || "trending";
+    function renderAllRows() {
       const q = searchInput.value.toLowerCase();
-      const filtered = allMovies
-        .filter(m => m.category === cat)
-        .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q));
-      renderGrid(grid, filtered);
-    });
+
+      renderRow(document.getElementById('trendingRow'),
+        allMovies.filter(m => m.category === "trending")
+                 .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q)));
+
+      renderRow(document.getElementById('newRow'),
+        allMovies.filter(m => m.category === "new")
+                 .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q)));
+
+      renderRow(document.getElementById('actionRow'),
+        allMovies.filter(m => m.category === "action")
+                 .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q)));
+
+      renderRow(document.getElementById('comedyRow'),
+        allMovies.filter(m => m.category === "comedy")
+                 .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q)));
+    }
+
+    searchInput.addEventListener("input", renderAllRows);
 
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
   </script>
