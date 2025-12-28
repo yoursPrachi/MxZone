@@ -5,21 +5,92 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MXZone | Home</title>
   <link rel="stylesheet" href="/styles.css" />
+  <link rel="manifest" href="/manifest.json" />
 </head>
 <body>
-  <header class="app-bar">
-    <h1>MXZone</h1>
-  </header>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+    <div class="hero-overlay">
+      <h1>Welcome to MXZone</h1>
+      <p>Stream & Download Movies Instantly</p>
+      <a href="#grid" class="btn primary">Explore Now</a>
+    </div>
+  </section>
 
+  <!-- Category Tabs -->
+  <nav class="tabs">
+    <button class="tab active" data-category="trending">🔥 Trending</button>
+    <button class="tab" data-category="new">🆕 New Releases</button>
+    <button class="tab" data-category="action">💥 Action</button>
+    <button class="tab" data-category="comedy">😂 Comedy</button>
+  </nav>
+
+  <!-- Search Bar -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="🔍 Search movies..." />
+  </div>
+
+  <!-- Movie Grid -->
   <main class="container">
-    <h2>Movies</h2>
     <div id="grid" class="grid"></div>
   </main>
+
+  <footer class="footer">
+    <p>© 2025 MXZone | Powered by Firebase + Cloudinary</p>
+  </footer>
+
+  <script>
+    const banners = [
+      "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner1.jpg",
+      "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner2.jpg",
+      "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner3.jpg"
+    ];
+    let current = 0;
+    const hero = document.getElementById("hero");
+    function changeBanner() {
+      hero.style.backgroundImage = `url('${banners[current]}')`;
+      current = (current + 1) % banners.length;
+    }
+    changeBanner();
+    setInterval(changeBanner, 5000);
+  </script>
 
   <script type="module">
     import { fetchMovies } from './lib/data.js';
     import { renderGrid } from './lib/ui.js';
-    fetchMovies().then(movies => renderGrid(document.getElementById('grid'), movies));
+
+    let allMovies = [];
+    const grid = document.getElementById('grid');
+    const searchInput = document.getElementById('searchInput');
+
+    fetchMovies().then(movies => {
+      allMovies = movies;
+      renderGrid(grid, allMovies.filter(m => m.category === "trending"));
+    });
+
+    document.querySelectorAll(".tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const cat = tab.dataset.category;
+        const q = searchInput.value.toLowerCase();
+        const filtered = allMovies
+          .filter(m => m.category === cat)
+          .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q));
+        renderGrid(grid, filtered);
+      });
+    });
+
+    searchInput.addEventListener("input", () => {
+      const cat = document.querySelector(".tab.active")?.dataset.category || "trending";
+      const q = searchInput.value.toLowerCase();
+      const filtered = allMovies
+        .filter(m => m.category === cat)
+        .filter(m => m.title.toLowerCase().includes(q) || m.description.toLowerCase().includes(q));
+      renderGrid(grid, filtered);
+    });
+
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
   </script>
 </body>
 </html>
