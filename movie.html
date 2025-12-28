@@ -21,14 +21,10 @@
   <script type="module">
     import { fetchMovies } from './lib/data.js';
     import { transformUrl } from './lib/utils.js';
+    import { runLoaderAndRedirect } from './download.js';
 
     const params = new URLSearchParams(location.search);
     const id = params.get('id');
-
-    window.go = (ad, to) => {
-      if (!to) { alert("Terabox link missing ❌"); return; }
-      location.href = `/go.html?ad=${encodeURIComponent(ad)}&to=${encodeURIComponent(to)}`;
-    };
 
     fetchMovies().then(movies => {
       const movie = movies.find(m => m.id === id);
@@ -44,10 +40,35 @@
         <h2>${movie.title}</h2>
         <p>${movie.description}</p>
         <div class="actions">
-          <button class="btn primary" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">▶ Watch Now</button>
-          <button class="btn secondary" onclick="go('${movie.adstraLink}','${movie.teraboxLink}')">⬇ Download</button>
+          <button id="watchBtn" class="btn primary">▶ Watch Now</button>
+          <button id="downloadBtn" class="btn secondary">⬇ Download</button>
+        </div>
+        <!-- Loader -->
+        <div id="loader" class="loader hidden">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p id="progressText">Preparing your request... 0%</p>
+          <div class="circle-timer">
+            <svg width="100" height="100">
+              <circle cx="50" cy="50" r="45" stroke="#1f2833" stroke-width="6" fill="none"/>
+              <circle id="circleProgress" cx="50" cy="50" r="45" stroke="var(--secondary)" stroke-width="6" fill="none"
+                      stroke-dasharray="280" stroke-dashoffset="280"/>
+            </svg>
+            <span id="countdownText">3</span>
+            <div class="reel-icon">🎞️</div>
+          </div>
         </div>
       `;
+
+      // Attach loader to both buttons
+      document.getElementById("watchBtn").addEventListener("click", () => {
+        runLoaderAndRedirect(`/go.html?ad=${encodeURIComponent(movie.adstraLink)}&to=${encodeURIComponent(movie.teraboxLink)}`, "Preparing Watch");
+      });
+
+      document.getElementById("downloadBtn").addEventListener("click", () => {
+        runLoaderAndRedirect(`/go.html?ad=${encodeURIComponent(movie.adstraLink)}&to=${encodeURIComponent(movie.teraboxLink)}`, "Preparing Download");
+      });
     });
 
     if ('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js');
