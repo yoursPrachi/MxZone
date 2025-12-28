@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin Panel | MXZone</title>
   <link rel="stylesheet" href="/styles.css" />
-  <!-- Cloudinary Upload Widget -->
   <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
 </head>
 <body>
@@ -15,10 +14,18 @@
   </header>
 
   <main class="container">
-    <div class="form-card">
+    <!-- 🔐 Login Gate -->
+    <div id="loginGate" class="form-card">
+      <h2>Admin Login</h2>
+      <input type="password" id="passwordInput" placeholder="Enter Password" />
+      <button id="loginBtn" class="btn primary">Login</button>
+      <p id="errorMsg" style="color:red;"></p>
+    </div>
+
+    <!-- 🎬 Actual Admin Form (hidden initially) -->
+    <div id="adminPanel" class="form-card hidden">
       <h2>Add New Movie</h2>
       <form id="movieForm" class="form">
-        
         <label for="title">Movie Title</label>
         <input type="text" id="title" name="title" placeholder="Enter movie title" required />
 
@@ -27,7 +34,6 @@
 
         <label for="uploadWidget">Poster</label>
         <button type="button" id="uploadWidget" class="btn secondary">Upload Poster</button>
-        <!-- Hidden input for Cloudinary URL -->
         <input type="hidden" id="thumbUrl" name="thumb" />
 
         <label for="adstraLink">Adstra Link</label>
@@ -49,7 +55,26 @@
     </div>
   </main>
 
-  <!-- ✅ Attach your modular admin.js -->
+  <!-- ✅ Attach modular JS -->
+  <script type="module">
+    import { ADMIN_PASSWORD } from './password.js';
+
+    const loginBtn = document.getElementById("loginBtn");
+    const input = document.getElementById("passwordInput");
+    const errorMsg = document.getElementById("errorMsg");
+    const loginGate = document.getElementById("loginGate");
+    const adminPanel = document.getElementById("adminPanel");
+
+    loginBtn.addEventListener("click", () => {
+      if (input.value === ADMIN_PASSWORD) {
+        loginGate.classList.add("hidden");
+        adminPanel.classList.remove("hidden");
+      } else {
+        errorMsg.textContent = "❌ Wrong password!";
+      }
+    });
+  </script>
+
   <script type="module" src="/lib/admin.js"></script>
 </body>
 </html>
