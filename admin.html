@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Admin Panel | MXZone</title>
   <link rel="stylesheet" href="/styles.css" />
+  <!-- Cloudinary Upload Widget -->
   <script src="https://widget.cloudinary.com/v2.0/global/all.js"></script>
 </head>
 <body>
@@ -17,24 +18,26 @@
     <div class="form-card">
       <h2>Add New Movie</h2>
       <form id="movieForm" class="form">
-        <label>Movie Title</label>
-        <input type="text" name="title" placeholder="Enter movie title" required />
+        
+        <label for="title">Movie Title</label>
+        <input type="text" id="title" name="title" placeholder="Enter movie title" required />
 
-        <label>Description</label>
-        <textarea name="description" placeholder="Short description" required></textarea>
+        <label for="description">Description</label>
+        <textarea id="description" name="description" placeholder="Short description" required></textarea>
 
-        <label>Poster</label>
-        <button type="button" id="uploadWidget" class="btn">Upload Poster</button>
+        <label for="uploadWidget">Poster</label>
+        <button type="button" id="uploadWidget" class="btn secondary">Upload Poster</button>
+        <!-- Hidden input for Cloudinary URL -->
         <input type="hidden" id="thumbUrl" name="thumb" />
 
-        <label>Adstra Link</label>
-        <input type="url" name="adstraLink" placeholder="https://..." required />
+        <label for="adstraLink">Adstra Link</label>
+        <input type="url" id="adstraLink" name="adstraLink" placeholder="https://..." required />
 
-        <label>Terabox Link</label>
-        <input type="url" name="teraboxLink" placeholder="https://..." required />
+        <label for="teraboxLink">Terabox Link</label>
+        <input type="url" id="teraboxLink" name="teraboxLink" placeholder="https://..." required />
 
-        <label>Category</label>
-        <select name="category" required>
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
           <option value="trending">Trending</option>
           <option value="new">New Releases</option>
           <option value="action">Action</option>
@@ -46,45 +49,7 @@
     </div>
   </main>
 
-  <script type="module">
-    import { addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
-    import { moviesCol } from "./lib/firebase.js";
-
-    const cloudName = "YOUR_CLOUD_NAME";
-    const uploadPreset = "YOUR_UNSIGNED_PRESET";
-
-    document.getElementById("uploadWidget").onclick = () => {
-      cloudinary.openUploadWidget({
-        cloudName,
-        uploadPreset,
-        sources: ["local", "url", "camera"],
-        cropping: true,
-        multiple: false,
-        folder: "movies"
-      }, (error, result) => {
-        if (!error && result && result.event === "success") {
-          document.getElementById("thumbUrl").value = result.info.secure_url;
-          alert("Poster uploaded! ✅");
-        }
-      });
-    };
-
-    document.getElementById("movieForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const form = e.target;
-      const movie = {
-        title: form.title.value,
-        description: form.description.value,
-        thumb: form.thumb.value,
-        adstraLink: form.adstraLink.value,
-        teraboxLink: form.teraboxLink.value,
-        category: form.category.value,
-        createdAt: Date.now()
-      };
-      await addDoc(moviesCol, movie);
-      alert("Movie saved to Firebase! 🎉");
-      form.reset();
-    });
-  </script>
+  <!-- ✅ Attach your modular admin.js -->
+  <script type="module" src="/lib/admin.js"></script>
 </body>
 </html>
