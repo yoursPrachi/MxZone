@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Continue...</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <meta name="robots" content="noindex" />
+</head>
+<body>
+  <main class="container center">
+    <div class="interstitial">
+      <h2>Please wait...</h2>
+      <p id="status">Opening the sponsor in a new tab, then continuing automatically.</p>
+      <div class="spinner" aria-hidden="true"></div>
+      <div class="actions">
+        <button id="manual" class="btn">Continue manually</button>
+      </div>
+    </div>
+  </main>
+
+  <script type="module">
+    import { runRedirect } from './lib/redirect.js';
+    runRedirect();
+  </script>
+</body>
+</html>
