@@ -3,15 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MX-style | Home</title>
+  <title>MXZone | Home</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <header class="app-bar"><h1>MX-style</h1></header>
+  <header class="app-bar">
+    <h1>MXZone</h1>
+  </header>
+
   <main class="container">
     <h2>Movies</h2>
     <div id="grid" class="grid"></div>
   </main>
+
   <script type="module">
     import { fetchMovies } from './lib/data.js';
     import { renderGrid } from './lib/ui.js';
