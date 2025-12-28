@@ -11,13 +11,13 @@
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="hero-overlay">
-      <h1>Welcome to MXZone</h1>
+      <h1>MXZone</h1>
       <p>Stream & Download Movies Instantly</p>
       <a href="#grid" class="btn primary">Explore Now</a>
     </div>
   </section>
 
-  <!-- Category Tabs -->
+  <!-- Tabs -->
   <nav class="tabs">
     <button class="tab active" data-category="trending">🔥 Trending</button>
     <button class="tab" data-category="new">🆕 New Releases</button>
@@ -39,11 +39,12 @@
     <p>© 2025 MXZone | Powered by Firebase + Cloudinary</p>
   </footer>
 
+  <!-- Hero Banner Rotation -->
   <script>
     const banners = [
-      "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner1.jpg",
-      "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner2.jpg",
-      "https://res.cloudinary.com/YOUR_CLOUD_NAME/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner3.jpg"
+      "https://res.cloudinary.com/YOUR_CLOUD/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner1.jpg",
+      "https://res.cloudinary.com/YOUR_CLOUD/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner2.jpg",
+      "https://res.cloudinary.com/YOUR_CLOUD/image/upload/w_1200,h_700,c_fill,q_auto,f_auto/movies/banner3.jpg"
     ];
     let current = 0;
     const hero = document.getElementById("hero");
@@ -55,6 +56,7 @@
     setInterval(changeBanner, 5000);
   </script>
 
+  <!-- Firebase + UI -->
   <script type="module">
     import { fetchMovies } from './lib/data.js';
     import { renderGrid } from './lib/ui.js';
